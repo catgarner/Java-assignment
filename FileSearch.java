@@ -10,16 +10,17 @@ public class FileSearch
 	Scanner myScanner;
 	String line = "Couldn't read the file";
 	
+	public void openFile(String filename)
+	{
+		myfile = new File(filename);
+	}
+	
 	public FileSearch(String filename)
 	{
 		this.filename = filename;
 
 	}
 	
-	public void openFile()
-	{
-		myfile = new File(filename);
-	}
 	
 	public String scanFile()
 	{

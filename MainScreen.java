@@ -3,8 +3,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -20,7 +22,10 @@ public class MainScreen extends JFrame implements ActionListener
 	private JPanel search;
 	private JTextField chooseText;
 	private JButton clickChoose;
+	private JButton search_files;
+	private JFileChooser fc;
 	private JPanel choose;
+	
 	
 	
 	public MainScreen(String title)
@@ -29,6 +34,7 @@ public class MainScreen extends JFrame implements ActionListener
 		setSize(500,300);
 		setLayout(new FlowLayout());
 		
+		//Heading
 		Hbackground = new JPanel();
 		add(Hbackground);
 		Hbackground.setBackground(Color.BLACK);
@@ -42,6 +48,8 @@ public class MainScreen extends JFrame implements ActionListener
 		add(search);
 		search.setPreferredSize(new Dimension(500,40));
 		
+		
+		//Search for a word
 		searchWord = new JTextField("Enter search word here");
 		search.add(searchWord);
 		
@@ -53,10 +61,16 @@ public class MainScreen extends JFrame implements ActionListener
 		add(choose);
 		choose.setPreferredSize(new Dimension(500,40));
 		
-		chooseText = new JTextField("Enter the text you would like to search");
+		
+		//Choose the text to search
+		chooseText = new JTextField("Enter the file you would like to search");
 		choose.add(chooseText);
 		
-		clickChoose = new JButton("Search");
+		search_files = new JButton("Search Files");
+		search_files.addActionListener(this);
+		choose.add(search_files);
+		
+		clickChoose = new JButton("Select");
 		clickChoose.addActionListener(this);
 		choose.add(clickChoose);
 		
@@ -65,12 +79,27 @@ public class MainScreen extends JFrame implements ActionListener
 
 	public void actionPerformed(ActionEvent arg0) 
 	{
-		String text1 = searchWord.getText();
+		//Search for filename
+		if(arg0.getSource()== search_files)
+		{
+			fc = new JFileChooser();
+			int returnValue = fc.showOpenDialog(null);
+			if(returnValue == JFileChooser.APPROVE_OPTION)
+			{
+				File choosenFile = fc.getSelectedFile();
+				chooseText.setText(choosenFile.getName());
+			}
+		}
 		
-		if(arg0.getSource()== clickSearch)
+		//Open file if search is selected
+		String file = chooseText.getText();
+		
+		if(arg0.getSource()== clickChoose)
 		{
 			
-			
+			FileSearch myReader = new FileSearch(file);
+			myReader.openFile(file);
+			System.out.println(file);
 		}
 	}
 	
