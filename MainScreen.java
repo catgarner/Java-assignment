@@ -4,13 +4,16 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 
 public class MainScreen extends JFrame implements ActionListener
@@ -24,9 +27,11 @@ public class MainScreen extends JFrame implements ActionListener
 	private JButton clickChoose;
 	private JButton search_files;
 	private JFileChooser fc;
+	private JButton showAll;
 	private JPanel choose;
+	private JTextArea area;
 	
-	
+	ArrayList<String> fileList = new ArrayList<String>();
 	
 	public MainScreen(String title)
 	{
@@ -74,6 +79,13 @@ public class MainScreen extends JFrame implements ActionListener
 		clickChoose.addActionListener(this);
 		choose.add(clickChoose);
 		
+		showAll = new JButton("Show all");
+		showAll.addActionListener(this);
+		choose.add(showAll);
+		
+		area = new JTextArea(" ");
+		add(area);
+		
 		setVisible(true);
 	}
 
@@ -92,14 +104,21 @@ public class MainScreen extends JFrame implements ActionListener
 		}
 		
 		//Open file if search is selected
-		String file = chooseText.getText();
-		
 		if(arg0.getSource()== clickChoose)
 		{
+			String file = chooseText.getText();
+			fileList.add(file);
+			JOptionPane.showMessageDialog(this, file + " was added"); 
 			
-			FileSearch myReader = new FileSearch(file);
-			myReader.openFile(file);
 			System.out.println(file);
+		}
+		
+		if(arg0.getSource()==showAll)
+		{
+			for (String element: fileList)
+			{
+				area.append(element.toString());
+			}
 		}
 	}
 	
