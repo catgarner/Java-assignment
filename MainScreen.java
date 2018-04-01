@@ -1,8 +1,11 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -10,26 +13,27 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 
-public class MainScreen extends JFrame implements ActionListener
+public class MainScreen extends JFrame implements ActionListener, MouseListener
 {
 	private JLabel heading;
 	private JPanel Hbackground;
+	
+	private JLabel whatToSearch;
 	private JTextField searchWord;
-	private JButton clickSearch;
 	private JPanel search;
+	
+	private JLabel whereToSearch;
 	private JTextField chooseText;
-	private JButton clickChoose;
-	private JButton search_files;
+	//private JButton browse_files;
 	private JFileChooser fc;
-	private JButton showAll;
 	private JPanel choose;
-	private JTextArea area;
+	
 	
 	ArrayList<String> fileList = new ArrayList<String>();
 	
@@ -40,7 +44,7 @@ public class MainScreen extends JFrame implements ActionListener
 		setLayout(new FlowLayout());
 		
 		//Heading
-		Hbackground = new JPanel();
+		Hbackground = new JPanel();//Panel for header
 		add(Hbackground);
 		Hbackground.setBackground(Color.BLACK);
 		Hbackground.setPreferredSize(new Dimension(500,30));
@@ -48,78 +52,96 @@ public class MainScreen extends JFrame implements ActionListener
 		heading = new JLabel("My Search Engine");
 		Hbackground.add(heading);
 		heading.setForeground(Color.WHITE);
-		
-		search = new JPanel();
-		add(search);
-		search.setPreferredSize(new Dimension(500,40));
+		//End heading
 		
 		
 		//Search for a word
-		searchWord = new JTextField("Enter search word here");
+		search = new JPanel();//Panel for searching for a word
+		add(search);
+		search.setPreferredSize(new Dimension(500,40));
+		
+		whatToSearch = new JLabel("Select word:   ");
+		search.add(whatToSearch);
+		whatToSearch.setForeground(Color.BLUE);
+		
+		searchWord = new JTextField("Enter your word and press return");
 		search.add(searchWord);
+		searchWord.addActionListener(this);
+		//End Search for a word
 		
-		clickSearch = new JButton("Search");
-		clickSearch.addActionListener(this);
-		search.add(clickSearch);
-		
-		choose = new JPanel();
+		//Choose the texts to search
+		choose = new JPanel();//Panel for the texts to search
 		add(choose);
 		choose.setPreferredSize(new Dimension(500,40));
 		
+		whereToSearch = new JLabel("Select files:   ");
+		choose.add(whereToSearch);
+		whereToSearch.setForeground(Color.BLUE);
 		
-		//Choose the text to search
-		chooseText = new JTextField("Enter the file you would like to search");
+		chooseText = new JTextField("Choose file or files ");
 		choose.add(chooseText);
+		chooseText.addMouseListener(this);
 		
-		search_files = new JButton("Search Files");
-		search_files.addActionListener(this);
-		choose.add(search_files);
+		//browse_files = new JButton("   Browse   ");
+		//browse_files.addActionListener(this);
+		//choose.add(browse_files);
+		//End choose the texts to search
 		
-		clickChoose = new JButton("Select");
-		clickChoose.addActionListener(this);
-		choose.add(clickChoose);
-		
-		showAll = new JButton("Show all");
-		showAll.addActionListener(this);
-		choose.add(showAll);
-		
-		area = new JTextArea(" ");
-		add(area);
 		
 		setVisible(true);
 	}
 
 	public void actionPerformed(ActionEvent arg0) 
 	{
-		//Search for filename
-		if(arg0.getSource()== search_files)
+		//Get search word
+		String word = searchWord.getText();
+		if(arg0.getSource()== searchWord)
 		{
+			JOptionPane.showMessageDialog(this, "You choose to search for the word: " + word);
+		}
+		
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) 
+	{
+		//Search all files
+		if(arg0.getSource()== chooseText)
+		{
+			Component frame = null;
 			fc = new JFileChooser();
-			int returnValue = fc.showOpenDialog(null);
-			if(returnValue == JFileChooser.APPROVE_OPTION)
-			{
-				File choosenFile = fc.getSelectedFile();
-				chooseText.setText(choosenFile.getName());
-			}
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("DOCX & PDF files", "docx", "pdf");
+			fc.setFileFilter(filter);
+			fc.setMultiSelectionEnabled(true);
+			fc.showOpenDialog(frame);
+			File[] choosenFiles = fc.getSelectedFiles();
+			JOptionPane.showMessageDialog(this, choosenFiles);
 		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
-		//Open file if search is selected
-		if(arg0.getSource()== clickChoose)
-		{
-			String file = chooseText.getText();
-			fileList.add(file);
-			JOptionPane.showMessageDialog(this, file + " was added"); 
-			
-			System.out.println(file);
-		}
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
-		if(arg0.getSource()==showAll)
-		{
-			for (String element: fileList)
-			{
-				area.append(element.toString());
-			}
-		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
