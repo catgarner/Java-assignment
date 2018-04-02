@@ -5,19 +5,19 @@ public class FileSearch
 {
 	
 	
-	private String filename;
-	private File myfile;
+	private File[] filenames;
+	private File[] myfile;
 	Scanner myScanner;
 	String line = "Couldn't read the file";
 	
-	public void openFile(String filename)
+	public void openFile(File[] filenames)
 	{
-		myfile = new File(filename);
+		
 	}
 	
 	public FileSearch(String filename)
 	{
-		this.filename = filename;
+		this.filenames = filenames;
 
 	}
 	

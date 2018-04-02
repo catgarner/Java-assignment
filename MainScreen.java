@@ -30,12 +30,12 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 	
 	private JLabel whereToSearch;
 	private JTextField chooseText;
-	//private JButton browse_files;
 	private JFileChooser fc;
 	private JPanel choose;
 	
+	private JButton endSearch;
+	private JPanel finalSearch;
 	
-	ArrayList<String> fileList = new ArrayList<String>();
 	
 	public MainScreen(String title)
 	{
@@ -82,11 +82,14 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 		choose.add(chooseText);
 		chooseText.addMouseListener(this);
 		
-		//browse_files = new JButton("   Browse   ");
-		//browse_files.addActionListener(this);
-		//choose.add(browse_files);
-		//End choose the texts to search
+		//Final search
+		finalSearch = new JPanel();
+		add(finalSearch);
+		finalSearch.setPreferredSize(new Dimension(500,40));
 		
+		endSearch = new JButton("Search for key word in selected files");
+		finalSearch.add(endSearch);
+		endSearch.addActionListener(this);
 		
 		setVisible(true);
 	}
@@ -100,6 +103,13 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 			JOptionPane.showMessageDialog(this, "You choose to search for the word: " + word);
 		}
 		
+		if(arg0.getSource()== endSearch)
+		{
+			FileSearch myReader = new FileSearch("textvalues.txt");
+			myReader.openFile(chooseText);
+			String line = myReader.scanFile();
+			label1.setText(line);
+		}
 		
 	}
 
@@ -118,6 +128,8 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 			File[] choosenFiles = fc.getSelectedFiles();
 			JOptionPane.showMessageDialog(this, choosenFiles);
 		}
+		
+		 
 	}
 
 	@Override
