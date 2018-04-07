@@ -105,7 +105,7 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 		
 		if(arg0.getSource()== endSearch)
 		{
-			FileSearch myReader = new FileSearch("textvalues.txt");
+			FileSearch myReader = new FileSearch();
 			myReader.openFile(chooseText);
 			String line = myReader.scanFile();
 			label1.setText(line);
@@ -125,7 +125,7 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 			fc.setFileFilter(filter);
 			fc.setMultiSelectionEnabled(true);
 			fc.showOpenDialog(frame);
-			File[] choosenFiles = fc.getSelectedFiles();
+			final File[] choosenFiles = fc.getSelectedFiles();
 			JOptionPane.showMessageDialog(this, choosenFiles);
 		}
 		
