@@ -12,7 +12,7 @@ public class FileSearch
 	
 	public void openFile(File[] filenames)
 	{
-		myfile = new File(filename);
+		myfile = new File;
 	}
 	
 	public FileSearch(String filename)

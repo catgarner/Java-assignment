@@ -31,10 +31,12 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 	private JLabel whereToSearch;
 	private JTextField chooseText;
 	private JFileChooser fc;
+	private ArrayList<File> choosenFiles;
 	private JPanel choose;
 	
 	private JButton endSearch;
 	private JPanel finalSearch;
+	
 	
 	
 	public MainScreen(String title)
@@ -106,9 +108,13 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 		if(arg0.getSource()== endSearch)
 		{
 			FileSearch myReader = new FileSearch();
-			myReader.openFile(chooseText);
+			myReader.openFile(choosenFiles);
 			String line = myReader.scanFile();
 			label1.setText(line);
+			
+			String filename = "names.txt";
+			myReader.openFile(filename);
+			myReader.writeText(firstName, surName);
 		}
 		
 	}
@@ -116,16 +122,17 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 	@Override
 	public void mouseClicked(MouseEvent arg0) 
 	{
+		
 		//Search all files
 		if(arg0.getSource()== chooseText)
 		{
 			Component frame = null;
 			fc = new JFileChooser();
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("DOCX & PDF files", "docx", "pdf");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("TXT files", "txt");
 			fc.setFileFilter(filter);
 			fc.setMultiSelectionEnabled(true);
 			fc.showOpenDialog(frame);
-			final File[] choosenFiles = fc.getSelectedFiles();
+			choosenFiles = fc.getSelectedFiles();
 			JOptionPane.showMessageDialog(this, choosenFiles);
 		}
 		
