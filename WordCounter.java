@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class WordCounter 
 {
 	//Create input stream and scanner
-	FileInputStream fin = new FileInputStream("sample.txt");
+	/*FileInputStream fin = new FileInputStream("sample.txt");
 	Scanner fileInput = new Scanner(fin);
 	
 	private String word = "";
@@ -37,5 +37,5 @@ public class WordCounter
 		fin.close();
 		
 		System.out.println(word + " occured " + count + " time(s) " + not);
-	}
+	}*/
 }

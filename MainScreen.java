@@ -4,8 +4,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -13,13 +11,14 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 
-public class MainScreen extends JFrame implements ActionListener, MouseListener
+public class MainScreen extends JFrame implements ActionListener
 {
 	private JLabel heading;
 	private JPanel Hbackground;
@@ -29,10 +28,15 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 	private JPanel search;
 	
 	private JLabel whereToSearch;
-	private JTextField chooseText;
 	private JFileChooser fc;
-	private ArrayList<File> choosenFiles;
+	private ArrayList<String> choosenFiles;
+	private JTextField typeChoose;;
+	private JButton browse;
+	private JButton addToList;
+	private JButton show;
 	private JPanel choose;
+	
+	private JTextArea area;
 	
 	private JButton endSearch;
 	private JPanel finalSearch;
@@ -66,7 +70,7 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 		search.add(whatToSearch);
 		whatToSearch.setForeground(Color.BLUE);
 		
-		searchWord = new JTextField("Enter your word and press return");
+		searchWord = new JTextField(" Enter your word and press return ");
 		search.add(searchWord);
 		searchWord.addActionListener(this);
 		//End Search for a word
@@ -80,9 +84,24 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 		choose.add(whereToSearch);
 		whereToSearch.setForeground(Color.BLUE);
 		
-		chooseText = new JTextField("Choose file or files ");
-		choose.add(chooseText);
-		chooseText.addMouseListener(this);
+		typeChoose = new JTextField("     Enter file or ...   ");
+		choose.add(typeChoose);
+		typeChoose.addActionListener(this);
+		
+		browse = new JButton("Browse");
+		choose.add(browse);
+		browse.addActionListener(this);
+		
+		addToList = new JButton("Add to list");
+		choose.add(addToList);
+		addToList.addActionListener(this);
+		
+		show = new JButton("Show");
+		choose.add(show);
+		show.addActionListener(this);
+		
+		area = new JTextArea("");
+		add(area);
 		
 		//Final search
 		finalSearch = new JPanel();
@@ -105,7 +124,43 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 			JOptionPane.showMessageDialog(this, "You choose to search for the word: " + word);
 		}
 		
-		if(arg0.getSource()== endSearch)
+		choosenFiles = new ArrayList<String>();
+		if(arg0.getSource()== browse)
+		{
+			Component frame = null;
+			fc = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("TXT files", "txt");
+			fc.setFileFilter(filter);
+			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			int returnV = fc.showOpenDialog(frame);
+			
+			
+			if(returnV == JFileChooser.APPROVE_OPTION)
+			{
+				File selected = fc.getSelectedFile();
+				typeChoose.setText(selected.getName());
+			}
+			
+			
+		}
+		
+		if(arg0.getSource()== addToList)
+		{
+			String file = typeChoose.getText();
+			choosenFiles.add(file);
+			JOptionPane.showMessageDialog(this, file + " has been added");
+		}
+		
+		
+		if(arg0.getSource()== show)
+		{
+			for (String element: choosenFiles)
+			{	
+				area.append(element.toString());
+			}
+		}
+		
+		/*if(arg0.getSource()== endSearch)
 		{
 			FileSearch myReader = new FileSearch();
 			myReader.openFile(choosenFiles);
@@ -115,51 +170,8 @@ public class MainScreen extends JFrame implements ActionListener, MouseListener
 			String filename = "names.txt";
 			myReader.openFile(filename);
 			myReader.writeText(firstName, surName);
-		}
-		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) 
-	{
-		
-		//Search all files
-		if(arg0.getSource()== chooseText)
-		{
-			Component frame = null;
-			fc = new JFileChooser();
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("TXT files", "txt");
-			fc.setFileFilter(filter);
-			fc.setMultiSelectionEnabled(true);
-			fc.showOpenDialog(frame);
-			choosenFiles = fc.getSelectedFiles();
-			JOptionPane.showMessageDialog(this, choosenFiles);
-		}
-		
-		 
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		}*/
+	
 		
 	}
 	

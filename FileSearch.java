@@ -5,20 +5,27 @@ public class FileSearch
 {
 	
 	
-	private File[] filenames;
-	private File[] myfile;
+	private String filenames;
 	Scanner myScanner;
 	String line = "Couldn't read the file";
 	
-	public void openFile(File[] filenames)
+	
+	
+	public void openFile(String filenames)
 	{
-		myfile = new File;
+		//myfile = new File;
 	}
 	
-	public FileSearch(String filename)
+	public FileSearch(String filenames)
 	{
-		this.filenames = filenames;
+		this.setFilenames(filenames);
 
+	}
+	
+	public String toString()
+	{
+		return ("\nThe list contains " + getFilenames() );
+		
 	}
 	
 	
@@ -26,7 +33,7 @@ public class FileSearch
 	{
 		try
 		{
-			myScanner = new Scanner(myfile);
+			//myScanner = new Scanner(myfile);
 			line = myScanner.nextLine();
 		}
 		catch(Exception ex)
@@ -36,6 +43,15 @@ public class FileSearch
 		
 		return line;
 		
+}
+
+	private String getFilenames() {
+		return filenames;
 	}
+
+	private void setFilenames(String filenames) {
+		this.filenames = filenames;
+	}
+	
 
 }
