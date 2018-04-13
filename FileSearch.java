@@ -1,39 +1,38 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileSearch 
 {
 	
 	
-	private String filenames;
-	Scanner myScanner;
+	private ArrayList<String> filenames;
+	private Scanner myScanner;
+	private File myfile;
 	String line = "Couldn't read the file";
 	
 	
 	
-	public void openFile(String filenames)
+	public void openFile()
 	{
-		//myfile = new File;
+		for (int i = 0; i < 1; i++) 
+		{
+			System.out.println(filenames.get(i));
+			myfile = new File(filenames.get(i));
+			System.out.println(myfile);
+		}
 	}
 	
-	public FileSearch(String filenames)
+	public FileSearch(ArrayList<String> choosenFiles)
 	{
-		this.setFilenames(filenames);
+		this.filenames = new ArrayList<String>(filenames);
 
 	}
-	
-	public String toString()
-	{
-		return ("\nThe list contains " + getFilenames() );
-		
-	}
-	
-	
-	public String scanFile()
+	/*public String scanFile()
 	{
 		try
 		{
-			//myScanner = new Scanner(myfile);
+			myScanner = new Scanner(myfile);
 			line = myScanner.nextLine();
 		}
 		catch(Exception ex)
@@ -42,16 +41,8 @@ public class FileSearch
 		}
 		
 		return line;
+	}
+	*/
 		
 }
 
-	private String getFilenames() {
-		return filenames;
-	}
-
-	private void setFilenames(String filenames) {
-		this.filenames = filenames;
-	}
-	
-
-}

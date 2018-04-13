@@ -33,7 +33,6 @@ public class MainScreen extends JFrame implements ActionListener
 	private JTextField typeChoose;;
 	private JButton browse;
 	private JButton addToList;
-	private JButton show;
 	private JPanel choose;
 	
 	private JTextArea area;
@@ -96,23 +95,21 @@ public class MainScreen extends JFrame implements ActionListener
 		choose.add(addToList);
 		addToList.addActionListener(this);
 		
-		show = new JButton("Show");
-		choose.add(show);
-		show.addActionListener(this);
-		
-		area = new JTextArea("");
+		area = new JTextArea("Chosen files are: ");
 		add(area);
 		
 		//Final search
 		finalSearch = new JPanel();
 		add(finalSearch);
-		finalSearch.setPreferredSize(new Dimension(500,40));
+		finalSearch.setPreferredSize(new Dimension(500,50));
 		
 		endSearch = new JButton("Search for key word in selected files");
 		finalSearch.add(endSearch);
 		endSearch.addActionListener(this);
 		
 		setVisible(true);
+		
+		choosenFiles = new ArrayList<String>();
 	}
 
 	public void actionPerformed(ActionEvent arg0) 
@@ -124,7 +121,8 @@ public class MainScreen extends JFrame implements ActionListener
 			JOptionPane.showMessageDialog(this, "You choose to search for the word: " + word);
 		}
 		
-		choosenFiles = new ArrayList<String>();
+		
+		//Get files
 		if(arg0.getSource()== browse)
 		{
 			Component frame = null;
@@ -134,43 +132,35 @@ public class MainScreen extends JFrame implements ActionListener
 			fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			int returnV = fc.showOpenDialog(frame);
 			
-			
 			if(returnV == JFileChooser.APPROVE_OPTION)
 			{
 				File selected = fc.getSelectedFile();
 				typeChoose.setText(selected.getName());
-			}
-			
-			
+			}			
 		}
 		
+		
+		//Add chosen file to array 
 		if(arg0.getSource()== addToList)
 		{
 			String file = typeChoose.getText();
 			choosenFiles.add(file);
 			JOptionPane.showMessageDialog(this, file + " has been added");
-		}
-		
-		
-		if(arg0.getSource()== show)
-		{
+			area.setText("Chosen files are: ");
 			for (String element: choosenFiles)
 			{	
-				area.append(element.toString());
+				area.append("\n" + element);
 			}
 		}
 		
-		/*if(arg0.getSource()== endSearch)
+		
+		if(arg0.getSource()== endSearch)
 		{
-			FileSearch myReader = new FileSearch();
-			myReader.openFile(choosenFiles);
-			String line = myReader.scanFile();
-			label1.setText(line);
-			
-			String filename = "names.txt";
-			myReader.openFile(filename);
-			myReader.writeText(firstName, surName);
-		}*/
+			FileSearch myReader = new FileSearch(choosenFiles);
+			myReader.openFile();
+			/*String line = myReader.scanFile();
+			area.setText(line);*/
+		}
 	
 		
 	}
