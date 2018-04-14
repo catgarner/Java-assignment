@@ -1,4 +1,6 @@
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class WordCounter 
@@ -7,15 +9,19 @@ public class WordCounter
 	private File newfile;
 	private Scanner myScanner;
 	
-	private String word;
-	private int count = 0;
+	private ArrayList<String> words;
+	int count = 0;
 	
-	public WordCounter(File newfile, String word)
+	ArrayList<String> punct = new ArrayList<String>
+	(Arrays.asList(",", ".", "\"", ";", ":", "+", "&", "?", "!", "*", "'", "(", ")", "/", "=", "[", "]", "_", "-"));
+	
+	
+	public WordCounter(File newfile, ArrayList<String> words)
 	{
 		
 	}
 	
-	public void scanFile(File newfile, String word)
+	public int scanFile(File newfile, ArrayList<String> words)
 	{
 		try
 		{
@@ -26,11 +32,22 @@ public class WordCounter
 				//Get the next word
 				String nextWord = myScanner.next();
 				
-				//Determine if word is in ArrayList
-				if(nextWord.contains(word))
+				//Strip punctuation
+				for(int i = 0; i < punct.size(); i++)
 				{
-					count++;
-					
+					if(nextWord.contains(punct.get(i)))
+					{
+						nextWord = nextWord.replace(punct.get(i), "");
+					}
+				}
+				
+				for(int i = 0; i < words.size(); i++)
+				{
+					if(nextWord.equalsIgnoreCase(words.get(i)))
+					{
+						count++;
+						
+					}
 				}
 			}
 		}
@@ -39,7 +56,8 @@ public class WordCounter
 			System.out.println("Error");
 		}
 		
-		
-		System.out.println(word + " occured " + count);
-	}
+		System.out.println(" occured " + count + " time(s)");
+		return count;
+	}	
+	
 }

@@ -25,6 +25,7 @@ public class MainScreen extends JFrame implements ActionListener
 	
 	private JLabel whatToSearch;
 	private JTextField searchWord;
+	private ArrayList<String> words;
 	private JPanel search;
 	
 	private JLabel whereToSearch;
@@ -37,15 +38,22 @@ public class MainScreen extends JFrame implements ActionListener
 	
 	private JTextArea area;
 	
-	private JButton endSearch;
-	private JPanel finalSearch;
+	private JLabel whatToAdd;
+	private JTextField suffix;
+	private JButton addSuffix;
+	private ArrayList<String> listOfSuffixes;
+	private JPanel suffixes;
 	
+	private JTextArea suffixArea;	
+	
+	private JButton endSearch;
+	private JPanel finalSearch;	
 	
 	
 	public MainScreen(String title)
 	{
 		super(title);
-		setSize(500,300);
+		setSize(500,500);
 		setLayout(new FlowLayout());
 		
 		//Heading
@@ -59,6 +67,25 @@ public class MainScreen extends JFrame implements ActionListener
 		heading.setForeground(Color.WHITE);
 		//End heading
 		
+		//Adding suffixes to the search
+		suffixes = new JPanel();
+		add(suffixes);
+		suffixes.setPreferredSize(new Dimension(500,40));
+		
+		whatToAdd = new JLabel("Add suffixes:   ");
+		suffixes.add(whatToAdd);
+		whatToAdd.setForeground(Color.BLUE);
+		
+		suffix = new JTextField(" Enter a suffix ");
+		suffixes.add(suffix);
+		suffix.addActionListener(this);
+		
+		addSuffix = new JButton("Add to list");
+		suffixes.add(addSuffix);
+		addSuffix.addActionListener(this);
+		
+		suffixArea = new JTextArea("Chosen suffixes are: ");
+		add(suffixArea);
 		
 		//Search for a word
 		search = new JPanel();//Panel for searching for a word
@@ -72,6 +99,8 @@ public class MainScreen extends JFrame implements ActionListener
 		searchWord = new JTextField(" Enter your word and press return ");
 		search.add(searchWord);
 		searchWord.addActionListener(this);
+		
+		words = new ArrayList<String>();
 		//End Search for a word
 		
 		//Choose the texts to search
@@ -110,15 +139,45 @@ public class MainScreen extends JFrame implements ActionListener
 		setVisible(true);
 		
 		choosenFiles = new ArrayList<String>();
+		listOfSuffixes = new ArrayList<String>();
 	}
 
 	public void actionPerformed(ActionEvent arg0) 
 	{
+
+		if(arg0.getSource()== addSuffix)
+		{
+			String newSuffix = suffix.getText();
+			listOfSuffixes.add(newSuffix);
+			JOptionPane.showMessageDialog(this, newSuffix + " has been added");
+			suffixArea.setText("Chosen suffixes are: ");
+			for (String element: listOfSuffixes)
+			{	
+				suffixArea.append("\n" + element);
+			}
+			
+		}
+		
 		//Get search word
 		String word = searchWord.getText();
 		if(arg0.getSource()== searchWord)
 		{
 			JOptionPane.showMessageDialog(this, "You choose to search for the word: " + word);
+			if(word.endsWith("*"))
+			{
+				word = word.replace("*", "");
+				words.add(word);
+				for(int i = 0; i < listOfSuffixes.size(); i++)
+				{
+					words.add(word + listOfSuffixes.get(i));
+				}
+				
+				System.out.println(words);
+			}
+			else
+			{
+				words.add(word);
+			}
 		}
 		
 		
@@ -154,11 +213,10 @@ public class MainScreen extends JFrame implements ActionListener
 			
 		}
 		
-		
 		if(arg0.getSource()== endSearch)
 		{
-			FileSearch myReader = new FileSearch(choosenFiles, word);
-			myReader.openFile(choosenFiles, word);
+			FileSearch myReader = new FileSearch(choosenFiles, words);
+			myReader.openFile(choosenFiles, words);
 		}
 	
 		
