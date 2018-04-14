@@ -1,41 +1,45 @@
-import java.io.FileInputStream;
+import java.io.File;
 import java.util.Scanner;
 
 public class WordCounter 
 {
 	//Create input stream and scanner
-	/*FileInputStream fin = new FileInputStream("sample.txt");
-	Scanner fileInput = new Scanner(fin);
+	private File newfile;
+	private Scanner myScanner;
 	
-	private String word = "";
+	private String word;
 	private int count = 0;
-	private int not = 0;
 	
-	public WordCounter()
+	public WordCounter(File newfile, String word)
 	{
+		
+	}
 	
-		//Read through file and find the words
-		while(fileInput.hasNext())
+	public void scanFile(File newfile, String word)
+	{
+		try
 		{
-			//Get the next word
-			String nextWord = fileInput.next();
+			myScanner = new Scanner(newfile);
 			
-			//Determine if word is in ArrayList
-			if(word.contains(nextWord))
+			while(myScanner.hasNext())
 			{
-				count++;
+				//Get the next word
+				String nextWord = myScanner.next();
 				
-			}
-			else
-			{
-				not++;
+				//Determine if word is in ArrayList
+				if(nextWord.contains(word))
+				{
+					count++;
+					
+				}
 			}
 		}
+		catch(Exception ex)
+		{
+			System.out.println("Error");
+		}
 		
-		//Close
-		fileInput.close();
-		fin.close();
 		
-		System.out.println(word + " occured " + count + " time(s) " + not);
-	}*/
+		System.out.println(word + " occured " + count);
+	}
 }

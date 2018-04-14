@@ -143,23 +143,22 @@ public class MainScreen extends JFrame implements ActionListener
 		//Add chosen file to array 
 		if(arg0.getSource()== addToList)
 		{
-			String file = typeChoose.getText();
-			choosenFiles.add(file);
-			JOptionPane.showMessageDialog(this, file + " has been added");
+			String filename = typeChoose.getText();
+			choosenFiles.add(filename);
+			JOptionPane.showMessageDialog(this, filename + " has been added");
 			area.setText("Chosen files are: ");
 			for (String element: choosenFiles)
 			{	
 				area.append("\n" + element);
 			}
+			
 		}
 		
 		
 		if(arg0.getSource()== endSearch)
 		{
-			FileSearch myReader = new FileSearch(choosenFiles);
-			myReader.openFile();
-			/*String line = myReader.scanFile();
-			area.setText(line);*/
+			FileSearch myReader = new FileSearch(choosenFiles, word);
+			myReader.openFile(choosenFiles, word);
 		}
 	
 		

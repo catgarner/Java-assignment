@@ -7,42 +7,28 @@ public class FileSearch
 	
 	
 	private ArrayList<String> filenames;
-	private Scanner myScanner;
 	private File myfile;
-	String line = "Couldn't read the file";
+	private String word;
 	
-	
-	
-	public void openFile()
-	{
-		for (int i = 0; i < 1; i++) 
-		{
-			System.out.println(filenames.get(i));
-			myfile = new File(filenames.get(i));
-			System.out.println(myfile);
-		}
-	}
-	
-	public FileSearch(ArrayList<String> choosenFiles)
+	public FileSearch(ArrayList<String> filenames, String word)
 	{
 		this.filenames = new ArrayList<String>(filenames);
 
 	}
-	/*public String scanFile()
+
+	public void openFile(ArrayList<String> filenames, String word)
 	{
-		try
+		System.out.println(word);
+		for (int i = 0; i < filenames.size(); i++) 
 		{
-			myScanner = new Scanner(myfile);
-			line = myScanner.nextLine();
+			System.out.println(filenames.get(i));
+			myfile = new File(filenames.get(i));
+			WordCounter counter = new WordCounter(myfile, word);
+			counter.scanFile(myfile, word);
 		}
-		catch(Exception ex)
-		{
-			System.out.println("Error");
-		}
-		
-		return line;
 	}
-	*/
+	
+	
 		
 }
 
