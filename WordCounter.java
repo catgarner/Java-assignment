@@ -10,18 +10,18 @@ public class WordCounter
 	private Scanner myScanner;
 	
 	private ArrayList<String> words;
-	int count = 0;
+	Integer count = 0;
+	
 	
 	ArrayList<String> punct = new ArrayList<String>
 	(Arrays.asList(",", ".", "\"", ";", ":", "+", "&", "?", "!", "*", "'", "(", ")", "/", "=", "[", "]", "_", "-"));
-	
 	
 	public WordCounter(File newfile, ArrayList<String> words)
 	{
 		
 	}
 	
-	public int scanFile(File newfile, ArrayList<String> words)
+	public Integer scanFile(File newfile, ArrayList<String> words)
 	{
 		try
 		{
