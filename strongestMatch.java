@@ -12,8 +12,10 @@ public class strongestMatch
 {
 	private HashMap<File, Integer> match;
 	
-	public strongestMatch(HashMap<File, Integer> match)
+
+	public HashMap<File, Integer> strongestMatch(HashMap<File, Integer> match)
 	{
+
 		this.match = new HashMap<File, Integer>();
 		
 		System.out.println("Before Sorting:");
@@ -31,7 +33,7 @@ public class strongestMatch
 	         System.out.println(matchMap.getValue());
 	      }
 	      
-	      Map<Integer, String> match2 = sortByValues(match); 
+	      HashMap<File, Integer> match2 = sortByValues(match); 
 	      System.out.println("After Sorting:");
 	      Set matchSet2 = match2.entrySet();
 	      Iterator j = matchSet2.iterator();
@@ -41,9 +43,11 @@ public class strongestMatch
 	           System.out.print(matchMap2.getKey() + ": ");
 	           System.out.println(matchMap2.getValue());
 	      }
+	      
+	      return match;
 	}
 
-	private static HashMap sortByValues(HashMap match2) 
+	private static HashMap sortByValues(HashMap<File, Integer> match2) 
 	{ 
 		LinkedList list = new LinkedList(match2.entrySet());
 		// Defined Custom Comparator here

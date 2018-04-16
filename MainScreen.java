@@ -7,6 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -41,6 +45,7 @@ public class MainScreen extends JFrame implements ActionListener
 	
 	private JTextArea area;
 	private JButton clear;
+	private JTextField delete;
 	private JPanel list;
 	
 	private JPanel split2;
@@ -82,7 +87,7 @@ public class MainScreen extends JFrame implements ActionListener
 		add(search);
 		search.setPreferredSize(new Dimension(500,50));
 		
-		whatToSearch = new JLabel("Select word:   ");
+		whatToSearch = new JLabel("Search word:   ");
 		search.add(whatToSearch);
 		whatToSearch.setForeground(Color.BLUE);
 		
@@ -126,7 +131,10 @@ public class MainScreen extends JFrame implements ActionListener
 		area = new JTextArea("Chosen files are: ");
 		list.add(area);
 		
-		clear = new JButton("Clear selected files");
+		delete = new JTextField("  Enter a file to remove  ");
+		list.add(delete);
+		
+		clear = new JButton("Remove file");
 		list.add(clear);
 		clear.addActionListener(this);
 		
@@ -239,8 +247,19 @@ public class MainScreen extends JFrame implements ActionListener
 		
 		if(arg0.getSource()== clear)
 		{
-			choosenFiles.clear();
+			String removeFile = delete.getText();
+			for(int i = 0; i < choosenFiles.size(); i++)
+			{
+				if(removeFile.contains(choosenFiles.get(i)))
+				{
+					choosenFiles.remove(choosenFiles.get(i));
+				}
+			}
 			area.setText("Chosen files are: ");
+			for (String element: choosenFiles)
+			{	
+				area.append("\n" + element);
+			}
 		}
 		
 		if(arg0.getSource()== endSearch)
@@ -264,8 +283,12 @@ public class MainScreen extends JFrame implements ActionListener
 			{
 				words.add(word);
 			}
+			
 			FileSearch myReader = new FileSearch(choosenFiles, words);
-			myReader.openFile(choosenFiles, words);
+			HashMap<File, Integer> match = myReader.openFile(choosenFiles, words);
+			strongestMatch strongest = new strongestMatch();
+			HashMap<File, Integer> strongMatch = strongest.strongestMatch(match);
+			
 		}
 	
 		
