@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -28,6 +29,8 @@ public class MainScreen extends JFrame implements ActionListener
 	private ArrayList<String> words;
 	private JPanel search;
 	
+	private JPanel split;
+	
 	private JLabel whereToSearch;
 	private JFileChooser fc;
 	private ArrayList<String> choosenFiles;
@@ -40,8 +43,13 @@ public class MainScreen extends JFrame implements ActionListener
 	private JButton clear;
 	private JPanel list;
 	
+	private JPanel split2;
+	
 	private JButton endSearch;
 	private JPanel finalSearch;
+	
+	private JLabel extra;
+	private JPanel extraPanel;
 	
 	private JLabel whatToAdd;
 	private JTextField suffix;
@@ -54,24 +62,25 @@ public class MainScreen extends JFrame implements ActionListener
 	public MainScreen(String title)
 	{
 		super(title);
-		setSize(500,500);
+		setSize(500,600);
 		setLayout(new FlowLayout());
 		
 		//Heading
 		Hbackground = new JPanel();//Panel for header
 		add(Hbackground);
-		Hbackground.setBackground(Color.BLACK);
-		Hbackground.setPreferredSize(new Dimension(500,30));
+		Hbackground.setBackground(Color.BLUE);
+		Hbackground.setPreferredSize(new Dimension(500,50));
 		
 		heading = new JLabel("My Search Engine");
 		Hbackground.add(heading);
 		heading.setForeground(Color.WHITE);
+		heading.setFont(new Font("Times New Roman", Font.BOLD, 30));
 		//End heading
 		
 		//Search for a word
 		search = new JPanel();//Panel for searching for a word
 		add(search);
-		search.setPreferredSize(new Dimension(500,40));
+		search.setPreferredSize(new Dimension(500,50));
 		
 		whatToSearch = new JLabel("Select word:   ");
 		search.add(whatToSearch);
@@ -83,6 +92,11 @@ public class MainScreen extends JFrame implements ActionListener
 		
 		words = new ArrayList<String>();
 		//End Search for a word
+		
+		split = new JPanel();//Panel for header
+		add(split);
+		split.setBackground(Color.BLACK);
+		split.setPreferredSize(new Dimension(500,2));
 		
 		//Choose the texts to search
 		choose = new JPanel();//Panel for the texts to search
@@ -107,7 +121,7 @@ public class MainScreen extends JFrame implements ActionListener
 		
 		list = new JPanel();
 		add(list);
-		list.setPreferredSize(new Dimension(500,40));
+		list.setPreferredSize(new Dimension(500,90));
 		
 		area = new JTextArea("Chosen files are: ");
 		list.add(area);
@@ -116,14 +130,30 @@ public class MainScreen extends JFrame implements ActionListener
 		list.add(clear);
 		clear.addActionListener(this);
 		
+		split2 = new JPanel();
+		add(split2);
+		split2.setBackground(Color.BLACK);
+		split2.setPreferredSize(new Dimension(500,2));
+		
 		//Final search
 		finalSearch = new JPanel();
 		add(finalSearch);
-		finalSearch.setPreferredSize(new Dimension(500,50));
+		finalSearch.setPreferredSize(new Dimension(500,70));
 		
 		endSearch = new JButton("Search for key word in selected files");
 		finalSearch.add(endSearch);
 		endSearch.addActionListener(this);
+		
+		//Heading
+		extraPanel = new JPanel();//Panel for header
+		add(extraPanel);
+		extraPanel.setBackground(Color.BLACK);
+		extraPanel.setPreferredSize(new Dimension(500,30));
+		
+		extra = new JLabel("Extra Features");
+		extraPanel.add(extra);
+		extra.setForeground(Color.WHITE);
+		//End heading
 		
 		//Adding suffixes to the search
 		suffixes = new JPanel();
