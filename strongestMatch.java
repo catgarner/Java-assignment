@@ -31,27 +31,27 @@ public class strongestMatch
 	         System.out.println(matchMap.getValue());
 	      }
 	      
-	      Map<Integer, String> map = sortByValues(match); 
+	      Map<Integer, String> match2 = sortByValues(match); 
 	      System.out.println("After Sorting:");
-	      Set set2 = map.entrySet();
-	      Iterator iterator2 = set2.iterator();
-	      while(iterator2.hasNext()) 
+	      Set matchSet2 = match2.entrySet();
+	      Iterator j = matchSet2.iterator();
+	      while(j.hasNext()) 
 	      {
-	           Map.Entry me2 = (Map.Entry)iterator2.next();
-	           System.out.print(me2.getKey() + ": ");
-	           System.out.println(me2.getValue());
+	           Map.Entry matchMap2 = (Map.Entry)j.next();
+	           System.out.print(matchMap2.getKey() + ": ");
+	           System.out.println(matchMap2.getValue());
 	      }
 	}
 
-	private static HashMap sortByValues(HashMap map) 
+	private static HashMap sortByValues(HashMap match2) 
 	{ 
-		LinkedList list = new LinkedList(map.entrySet());
+		LinkedList list = new LinkedList(match2.entrySet());
 		// Defined Custom Comparator here
 		Collections.sort(list, new Comparator() 
 		{
-			public int compare(Object o1, Object o2)
+			public int compare(Object lower, Object higher)
             {
-            	return ((Comparable) ((Map.Entry)(o1)).getValue()).compareTo(((Map.Entry)(o2)).getValue());
+            	return ((Comparable) ((Map.Entry)(higher)).getValue()).compareTo(((Map.Entry)(lower)).getValue());
             }
 		});
 	   // Here I am copying the sorted list in HashMap
