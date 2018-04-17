@@ -361,7 +361,7 @@ public class MainScreen extends JFrame implements ActionListener
 		 * The chosen files array list and the words array list are sent to the file search class. The 
 		 * open file method is called and a return value of a hash map with file and integer variables.
 		 * The strongest match method is called and the match hash map and the wild card variable are 
-		 * sent to it. This has a return value of a hash map with a file and integer variable types.
+		 * sent to it.
 		 */
 		if(arg0.getSource()== endSearch)
 		{
@@ -390,7 +390,7 @@ public class MainScreen extends JFrame implements ActionListener
 			FileSearch myReader = new FileSearch(choosenFiles, words);
 			HashMap<File, Integer> match = myReader.openFile(choosenFiles, words);
 			strongestMatch strongest = new strongestMatch();
-			HashMap<File, Integer> strongMatch = strongest.strongestMatch(match, wildWord);
+			strongest.strongestMatch(match, wildWord);
 		
 		}
 		

@@ -8,58 +8,53 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
-public class strongestMatch 
+public class strongestMatch implements Comparable
 {
 	private HashMap<File, Integer> match;
 	
-
-	public HashMap<File, Integer> strongestMatch(HashMap<File, Integer> match)
+	/*
+	 * This method takes in the hash map match and the string word from the main screen class. The sort method
+	 * is called on the match hash map. This will then print out the 
+	 * sorted hash map using an iterator. 
+	 */
+	public void strongestMatch(HashMap<File, Integer> match, String word)
 	{
 
 		this.match = new HashMap<File, Integer>();
-		
-		System.out.println("Before Sorting:");
-		// Get a set of the entries
-	      Set matchSet = match.entrySet();
 	      
-	      // Get an iterator
-	      Iterator i = matchSet.iterator();
+	      HashMap<File, Integer> match2 = sort(match); 
 	      
-	      // Display elements
-	      while(i.hasNext()) 
+	      System.out.println("\nStrongest-waekest match for the word \"" + word + "\":\n");
+	      
+	      Set matchSet = match2.entrySet();
+	      Iterator j = matchSet.iterator();
+	      while(j.hasNext())
 	      {
-	         Map.Entry matchMap = (Map.Entry)i.next();
-	         System.out.print(matchMap.getKey() + ": ");
-	         System.out.println(matchMap.getValue());
+	           Map.Entry matchMap = (Map.Entry)j.next();
+	           System.out.print(matchMap.getKey() + ": ");
+	           System.out.println(matchMap.getValue());
 	      }
 	      
-	      HashMap<File, Integer> match2 = sortByValues(match); 
-	      System.out.println("After Sorting:");
-	      Set matchSet2 = match2.entrySet();
-	      Iterator j = matchSet2.iterator();
-	      while(j.hasNext()) 
-	      {
-	           Map.Entry matchMap2 = (Map.Entry)j.next();
-	           System.out.print(matchMap2.getKey() + ": ");
-	           System.out.println(matchMap2.getValue());
-	      }
-	      
-	      return match;
 	}
 
-	private static HashMap sortByValues(HashMap<File, Integer> match2) 
+	/*
+	 * This method takes in a hash map from the strongest match class. It then uses the collections class
+	 * and the compare method to sort the hash map by the integer value. It sorts it from the highest number 
+	 * to the lowest number. This is showing which file contains the strongest match to the search word. 
+	 * The sorted hash map is then returned back to the strongest match method.
+	 */
+	private static HashMap sort(HashMap<File, Integer> match2)
 	{ 
-		LinkedList list = new LinkedList(match2.entrySet());
-		// Defined Custom Comparator here
-		Collections.sort(list, new Comparator() 
+		LinkedList<?> list = new LinkedList(match2.entrySet());
+		
+		Collections.sort(list, new Comparator<Object>() 
 		{
 			public int compare(Object lower, Object higher)
-            {
-            	return ((Comparable) ((Map.Entry)(higher)).getValue()).compareTo(((Map.Entry)(lower)).getValue());
-            }
+		    {
+		    	return ((Comparable)((Map.Entry)(higher)).getValue()).compareTo(((Map.Entry)(lower)).getValue());
+		    }
 		});
-	   // Here I am copying the sorted list in HashMap
-	   // using LinkedHashMap to preserve the insertion order
+	   
 	   HashMap sortedHashMap = new LinkedHashMap();
 	   for (Iterator it = list.iterator(); it.hasNext();) 
 	   {
@@ -68,4 +63,13 @@ public class strongestMatch
 	   } 
 	   return sortedHashMap;
 	}
+
+	@Override
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	
 }
