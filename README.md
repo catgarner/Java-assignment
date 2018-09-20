@@ -1,4 +1,4 @@
-# Java-assignment
+# Java-Search Engine
 
 Catherine Garner – C16371033.
 
